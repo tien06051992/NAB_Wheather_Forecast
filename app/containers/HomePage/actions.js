@@ -11,6 +11,7 @@ import {
   SEARCH_WEATHER,
   SEARCH_WEATHER_SUCCESS,
   SEARCH_WEATHER_FAILED,
+  CHANGE_CURRENT_LOCATION,
 } from './constants';
 
 /**
@@ -58,5 +59,15 @@ export function searchWeatherFailedAction(error: Error) {
   return {
     type: SEARCH_WEATHER_FAILED,
     error,
+  };
+}
+
+/**
+ * Change location
+ */
+export function changeCurrentLocationAction(woeid: number) {
+  return {
+    type: CHANGE_CURRENT_LOCATION,
+    woeid,
   };
 }

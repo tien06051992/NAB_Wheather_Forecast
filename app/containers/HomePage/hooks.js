@@ -1,10 +1,10 @@
-import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useCallback } from 'react';
 import debounce from 'lodash/fp/debounce';
+import map from 'lodash/fp/map';
 
 import useActions from 'hooks/useActions';
-import { searchLocationAction, searchWeatherAction } from './actions';
+import { searchLocationAction, changeCurrentLocationAction } from './actions';
 import { getLocations, getWeathers } from './selectors';
 
 export const useHooks = () => {
@@ -12,14 +12,20 @@ export const useHooks = () => {
    * Selectors
    */
   const locations = useSelector(getLocations);
-  const weathers = useSelector(getWeathers);
+  const optionLocations = map(
+    item => ({
+      label: item.title,
+      value: item.woeid,
+    }),
+    locations.data,
+  );
 
   /**
    * Actions
    */
-  const { searchLocation } = useActions({
+  const { searchLocation, changeCurrentLocation } = useActions({
     searchLocation: searchLocationAction,
-    searchWeather: searchWeatherAction,
+    changeCurrentLocation: changeCurrentLocationAction,
   });
 
   /**
@@ -27,18 +33,23 @@ export const useHooks = () => {
    */
   const onSearchChangeHandler = useCallback(
     debounce(500, value => {
-      value && searchLocation(value);
+      if (value) searchLocation(value);
     }),
     [],
   );
 
+  const onLocationChangeHandler = useCallback(({ value }) => {
+    changeCurrentLocation(value);
+  }, []);
+  console.log('dzo');
   return {
     selectors: {
       locations,
-      weathers,
+      optionLocations,
     },
     handlers: {
       onSearchChangeHandler,
+      onLocationChangeHandler,
     },
   };
 };

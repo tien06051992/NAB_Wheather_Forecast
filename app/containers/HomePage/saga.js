@@ -2,7 +2,13 @@
  * Gets the repositories of the user from Github
  */
 
-import { call, put, select, takeLatest, all, fork } from 'redux-saga/effects';
+import { call, put, takeLatest, all, fork } from 'redux-saga/effects';
+import map from 'lodash/fp/map';
+import flow from 'lodash/fp/flow';
+import set from 'lodash/fp/set';
+import get from 'lodash/fp/get';
+
+import Location from 'models/Location';
 import MetaWeatherFetcher from 'fetchers/MetaWeatherFetcher';
 import {
   searchLocationSuccessAction,
@@ -42,18 +48,20 @@ export function* searchLocationTask(action) {
   const { response, error } = yield call(searchLocationFetcher, location);
   console.log(response, error);
   if (response) {
-    yield put(searchLocationSuccessAction(response));
+    const locations = map(
+      item =>
+        flow(
+          set('title', get('title', item)),
+          set('woeid', get('woeid', item)),
+          set('locationType', get('location_type', item)),
+          set('lattLong', get('latt_long', item)),
+        )(new Location()),
+      response,
+    );
+    yield put(searchLocationSuccessAction(locations));
   } else {
     yield put(searchLocationFailedAction(error));
   }
-
-  // try {
-  //   // Call our request helper (see 'utils/request')
-  //   const { response, error } = yield call(request, requestURL);
-  //   yield put(reposLoaded(repos, username));
-  // } catch (err) {
-  //   yield put(repoLoadingError(err));
-  // }
 }
 
 export const searchLocationFetcher = (location: string) => {

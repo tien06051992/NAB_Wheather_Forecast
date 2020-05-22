@@ -9,6 +9,7 @@ import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
+import WeatherBoard from 'containers/WeatherBoard';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import H2 from 'components/H2';
@@ -29,7 +30,7 @@ export function HomePage(props: Props) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
   const { selectors, handlers } = useHooks();
-  const { locations } = selectors;
+  const { locations, optionLocations } = selectors;
   return (
     <article>
       <Helmet>
@@ -45,7 +46,10 @@ export function HomePage(props: Props) {
             placeholder={intl.formatMessage(messages.trymePlaceholderSearch)}
             isLoading={locations.status === STATUS.PENDING}
             onInputChange={handlers.onSearchChangeHandler}
+            onChange={handlers.onLocationChangeHandler}
+            options={optionLocations}
           />
+          <WeatherBoard />
         </Section>
       </div>
     </article>

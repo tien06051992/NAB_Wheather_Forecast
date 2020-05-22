@@ -16,10 +16,12 @@ import {
   SEARCH_WEATHER,
   SEARCH_WEATHER_SUCCESS,
   SEARCH_WEATHER_FAILED,
+  CHANGE_CURRENT_LOCATION,
 } from './constants';
 
 // The initial state of the App
 export const initialState = {
+  currentLocation: null,
   location: {
     data: null,
     status: null,
@@ -54,6 +56,12 @@ const homeReducer = (state = initialState, action) =>
         draft.location.status = STATUS.FAILED;
         draft.location.error = error;
         draft.location.data = null;
+        break;
+      }
+
+      case CHANGE_CURRENT_LOCATION: {
+        const { woeid } = action;
+        draft.currentLocation = woeid;
         break;
       }
 

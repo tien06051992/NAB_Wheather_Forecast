@@ -17,4 +17,9 @@ const getWeathers = createSelector(
   homeState => homeState.weather,
 );
 
-export { selectHome, getLocations, getWeathers };
+const getCurrentLocation = createSelector(
+  selectHome,
+  homeState => homeState.currentLocation,
+);
+
+export { selectHome, getLocations, getWeathers, getCurrentLocation };
