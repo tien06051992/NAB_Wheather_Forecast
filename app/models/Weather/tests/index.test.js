@@ -1,4 +1,4 @@
-import User from '..';
+import Weather from '..';
 
 describe('Weather', () => {
   it('Has entity', () => {
@@ -8,7 +8,7 @@ describe('Weather', () => {
       id,
     };
 
-    const result = new User(entity);
+    const result = new Weather(entity);
 
     expect(result.id).toEqual(id);
   });

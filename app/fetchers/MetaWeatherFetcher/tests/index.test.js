@@ -14,7 +14,7 @@ describe('MetaWeatherFetcher', () => {
 
     const location = 'dummy city';
 
-    fetcher.fetchLocation({ location }).then(({ response }) => {
+    fetcher.fetchLocation(location).then(({ response }) => {
       expect(response).toEqual({ data: 'test' });
     });
   });
@@ -22,7 +22,7 @@ describe('MetaWeatherFetcher', () => {
   it('fetchWeather', () => {
     const fetcher = new MetaWeatherFetcher();
     const woeid = 123;
-    fetcher.fetchWeather({ woeid }).then(({ response }) => {
+    fetcher.fetchWeather(woeid).then(({ response }) => {
       expect(response).toEqual({ data: 'test' });
     });
   });

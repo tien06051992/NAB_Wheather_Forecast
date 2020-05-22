@@ -1,32 +1,62 @@
+// @flow
 /*
  * Home Actions
- *
- * Actions change things in your application
- * Since this boilerplate uses a uni-directional data flow, specifically redux,
- * we have these actions which are the only way your application interacts with
- * your application state. This guarantees that your state is up to date and nobody
- * messes it up weirdly somewhere.
- *
- * To add a new Action:
- * 1) Import your constant
- * 2) Add a function like this:
- *    export function yourAction(var) {
- *        return { type: YOUR_ACTION_CONSTANT, var: var }
- *    }
  */
-
-import { CHANGE_USERNAME } from './constants';
+import type Location from 'models/Location';
+import type Weather from 'models/Weather';
+import {
+  SEARCH_LOCATION,
+  SEARCH_LOCATION_SUCCESS,
+  SEARCH_LOCATION_FAILED,
+  SEARCH_WEATHER,
+  SEARCH_WEATHER_SUCCESS,
+  SEARCH_WEATHER_FAILED,
+} from './constants';
 
 /**
- * Changes the input field of the form
- *
- * @param  {string} username The new text of the input field
- *
- * @return {object} An action object with a type of CHANGE_USERNAME
+ * Search location
  */
-export function changeUsername(username) {
+export function searchLocationAction(location: string) {
   return {
-    type: CHANGE_USERNAME,
-    username,
+    type: SEARCH_LOCATION,
+    location,
+  };
+}
+
+export function searchLocationSuccessAction(locations: Array<Location>) {
+  return {
+    type: SEARCH_LOCATION_SUCCESS,
+    locations,
+  };
+}
+
+export function searchLocationFailedAction(error: Error) {
+  return {
+    type: SEARCH_LOCATION_FAILED,
+    error,
+  };
+}
+
+/**
+ * Search weather
+ */
+export function searchWeatherAction(woeid: number) {
+  return {
+    type: SEARCH_WEATHER,
+    woeid,
+  };
+}
+
+export function searchWeatherSuccessAction(weathers: Array<Weather>) {
+  return {
+    type: SEARCH_WEATHER_SUCCESS,
+    weathers,
+  };
+}
+
+export function searchWeatherFailedAction(error: Error) {
+  return {
+    type: SEARCH_WEATHER_FAILED,
+    error,
   };
 }

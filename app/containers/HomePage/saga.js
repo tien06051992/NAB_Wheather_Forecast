@@ -2,37 +2,61 @@
  * Gets the repositories of the user from Github
  */
 
-import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { LOAD_REPOS } from 'containers/App/constants';
-import { reposLoaded, repoLoadingError } from 'containers/App/actions';
+import { call, put, select, takeLatest, all, fork } from 'redux-saga/effects';
+import MetaWeatherFetcher from 'fetchers/MetaWeatherFetcher';
+import {
+  searchLocationSuccessAction,
+  searchLocationFailedAction,
+  searchWeatherSuccessAction,
+  searchWeatherFailedAction,
+} from 'containers/HomePage/actions';
 
 import request from 'utils/request';
 import { makeSelectUsername } from 'containers/HomePage/selectors';
+import {
+  SEARCH_LOCATION,
+  SEARCH_LOCATION_SUCCESS,
+  SEARCH_LOCATION_FAILED,
+  SEARCH_WEATHER,
+  SEARCH_WEATHER_SUCCESS,
+  SEARCH_WEATHER_FAILED,
+} from './constants';
 
 /**
- * Github repos request/response handler
+ * Home saga
  */
-export function* getRepos() {
-  // Select username from store
-  const username = yield select(makeSelectUsername());
-  const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
+export default function* saga() {
+  yield all([fork(searchLocationWatcher)]);
+}
 
-  try {
-    // Call our request helper (see 'utils/request')
-    const repos = yield call(request, requestURL);
-    yield put(reposLoaded(repos, username));
-  } catch (err) {
-    yield put(repoLoadingError(err));
+export function* searchLocationWatcher() {
+  yield takeLatest(SEARCH_LOCATION, searchLocationTask);
+}
+
+/**
+ * Search location request/response handler
+ */
+export function* searchLocationTask(action) {
+  const { location } = action;
+
+  const { response, error } = yield call(searchLocationFetcher, location);
+  console.log(response, error);
+  if (response) {
+    yield put(searchLocationSuccessAction(response));
+  } else {
+    yield put(searchLocationFailedAction(error));
   }
+
+  // try {
+  //   // Call our request helper (see 'utils/request')
+  //   const { response, error } = yield call(request, requestURL);
+  //   yield put(reposLoaded(repos, username));
+  // } catch (err) {
+  //   yield put(repoLoadingError(err));
+  // }
 }
 
-/**
- * Root saga manages watcher lifecycle
- */
-export default function* githubData() {
-  // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
-  // By using `takeLatest` only the result of the latest API call is applied.
-  // It returns task descriptor (just like fork) so we can continue execution
-  // It will be cancelled automatically on component unmount
-  yield takeLatest(LOAD_REPOS, getRepos);
-}
+export const searchLocationFetcher = (location: string) => {
+  const fetcher = new MetaWeatherFetcher();
+  return fetcher.fetchLocation(location);
+};
