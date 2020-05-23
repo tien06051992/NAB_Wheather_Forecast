@@ -2,56 +2,109 @@
  * Tests for HomePage sagas
  */
 
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, all, fork, call } from 'redux-saga/effects';
 
-import { LOAD_REPOS } from 'containers/App/constants';
-import { reposLoaded, repoLoadingError } from 'containers/App/actions';
+import {
+  searchLocationSuccessAction,
+  searchLocationFailedAction,
+} from 'containers/HomePage/actions';
+import Location from 'models/Location';
+import { SEARCH_LOCATION } from '../constants';
+import saga, {
+  searchLocationWatcher,
+  searchLocationTask,
+  searchLocationFetcher,
+} from '../saga';
 
-import githubData, { getRepos } from '../saga';
-
-const username = 'mxstbr';
+jest.mock(
+  'fetchers/MetaWeatherFetcher',
+  () =>
+    function searchLocationFetcherMock() {
+      return {
+        fetchLocation: () => ({
+          response: {
+            isSuccess: true,
+          },
+        }),
+      };
+    },
+);
 
 /* eslint-disable redux-saga/yield-effects */
-describe('getRepos Saga', () => {
-  let getReposGenerator;
+describe('saga', () => {
+  describe('default saga', () => {
+    it('should fork all watchers', () => {
+      const iterator = saga();
+      const result = iterator.next().value;
 
-  // We have to test twice, once for a successful load and once for an unsuccessful one
-  // so we do all the stuff that happens beforehand automatically in the beforeEach
-  beforeEach(() => {
-    getReposGenerator = getRepos();
-
-    const selectDescriptor = getReposGenerator.next().value;
-    expect(selectDescriptor).toMatchSnapshot();
-
-    const callDescriptor = getReposGenerator.next(username).value;
-    expect(callDescriptor).toMatchSnapshot();
-  });
-
-  it('should dispatch the reposLoaded action if it requests the data successfully', () => {
-    const response = [
-      {
-        name: 'First repo',
-      },
-      {
-        name: 'Second repo',
-      },
-    ];
-    const putDescriptor = getReposGenerator.next(response).value;
-    expect(putDescriptor).toEqual(put(reposLoaded(response, username)));
-  });
-
-  it('should call the repoLoadingError action if the response errors', () => {
-    const response = new Error('Some error');
-    const putDescriptor = getReposGenerator.throw(response).value;
-    expect(putDescriptor).toEqual(put(repoLoadingError(response)));
+      expect(result).toEqual(all([fork(searchLocationWatcher)]));
+    });
   });
 });
 
-describe('githubDataSaga Saga', () => {
-  const githubDataSaga = githubData();
+describe('Watchers', () => {
+  let iterator;
+  let actualYield;
+  let expectedYield;
 
-  it('should start task to watch for LOAD_REPOS action', () => {
-    const takeLatestDescriptor = githubDataSaga.next().value;
-    expect(takeLatestDescriptor).toEqual(takeLatest(LOAD_REPOS, getRepos));
+  it('onProjectListInitWatcher', () => {
+    iterator = searchLocationWatcher();
+
+    actualYield = iterator.next().value;
+
+    expectedYield = takeLatest(SEARCH_LOCATION, searchLocationTask);
+    expect(actualYield).toEqual(expectedYield);
+  });
+});
+
+describe('Tasks', () => {
+  let iterator;
+  let actualYield;
+  let expectedYield;
+  describe('searchLocationTask', () => {
+    const action = {
+      location: 'dummy city',
+    };
+
+    beforeEach(() => {
+      iterator = searchLocationTask(action);
+
+      actualYield = iterator.next().value;
+      expectedYield = call(searchLocationFetcher, action.location);
+      expect(actualYield).toEqual(expectedYield);
+    });
+
+    it('searchLocationTask response success', () => {
+      const response = [
+        {
+          title: 'dummy title 1',
+        },
+        {
+          title: 'dummy title 2',
+        },
+      ];
+      const locations = [new Location(response[0]), new Location(response[1])];
+      actualYield = iterator.next({ response }).value;
+      expectedYield = put(searchLocationSuccessAction(locations));
+      expect(actualYield.type).toEqual(expectedYield.type);
+    });
+
+    it('searchLocationTask response failed', () => {
+      const error = 'dummy error';
+      actualYield = iterator.next({ error }).value;
+      expectedYield = put(searchLocationFailedAction(error));
+      expect(actualYield.type).toEqual(expectedYield.type);
+    });
+  });
+});
+
+describe('searchLocationFetcher ', () => {
+  it('watch', () => {
+    const actualYield = searchLocationFetcher('dummy city');
+    expect(actualYield).toEqual({
+      response: {
+        isSuccess: true,
+      },
+    });
   });
 });

@@ -1,9 +1,15 @@
-import { selectHome, makeSelectUsername } from '../selectors';
+import { initialState } from '../reducer';
+import {
+  selectHome,
+  getLocations,
+  getWeathers,
+  getCurrentLocation,
+} from '../selectors';
 
 describe('selectHome', () => {
   it('should select the home state', () => {
     const homeState = {
-      userData: {},
+      ...initialState,
     };
     const mockedState = {
       home: homeState,
@@ -12,15 +18,44 @@ describe('selectHome', () => {
   });
 });
 
-describe('makeSelectUsername', () => {
-  const usernameSelector = makeSelectUsername();
-  it('should select the username', () => {
-    const username = 'mxstbr';
+describe('getLocations', () => {
+  it('should select the location', () => {
+    const location = {
+      data: null,
+      status: null,
+    };
     const mockedState = {
       home: {
-        username,
+        location,
       },
     };
-    expect(usernameSelector(mockedState)).toEqual(username);
+    expect(getLocations(mockedState)).toEqual(location);
+  });
+});
+
+describe('getWeathers', () => {
+  it('should select the location', () => {
+    const weather = {
+      data: null,
+      status: null,
+    };
+    const mockedState = {
+      home: {
+        weather,
+      },
+    };
+    expect(getWeathers(mockedState)).toEqual(weather);
+  });
+});
+
+describe('getCurrentLocation', () => {
+  it('should select the location', () => {
+    const currentLocation = null;
+    const mockedState = {
+      home: {
+        currentLocation,
+      },
+    };
+    expect(getCurrentLocation(mockedState)).toEqual(currentLocation);
   });
 });

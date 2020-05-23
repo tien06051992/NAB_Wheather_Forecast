@@ -5,7 +5,7 @@
  */
 
 import React, { memo } from 'react';
-import { FormattedMessage, IntlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import map from 'lodash/fp/map';
 
 import { useInjectSaga } from 'utils/injectSaga';
