@@ -1,0 +1,7 @@
+/*
+ * WeatherConstants
+ */
+
+export const SEARCH_WEATHER = 'Home/SEARCH_WEATHER';
+export const SEARCH_WEATHER_SUCCESS = 'Home/SEARCH_WEATHER_SUCCESS';
+export const SEARCH_WEATHER_FAILED = 'Home/SEARCH_WEATHER_FAILED';

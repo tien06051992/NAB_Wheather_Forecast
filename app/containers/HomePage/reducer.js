@@ -9,13 +9,17 @@
 
 import produce from 'immer';
 import { STATUS } from 'utils/constants';
+
+import {
+  SEARCH_WEATHER,
+  SEARCH_WEATHER_SUCCESS,
+  SEARCH_WEATHER_FAILED,
+} from 'containers/WeatherBoard/constants';
+
 import {
   SEARCH_LOCATION,
   SEARCH_LOCATION_SUCCESS,
   SEARCH_LOCATION_FAILED,
-  SEARCH_WEATHER,
-  SEARCH_WEATHER_SUCCESS,
-  SEARCH_WEATHER_FAILED,
   CHANGE_CURRENT_LOCATION,
 } from './constants';
 

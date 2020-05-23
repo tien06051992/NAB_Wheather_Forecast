@@ -13,20 +13,8 @@ import MetaWeatherFetcher from 'fetchers/MetaWeatherFetcher';
 import {
   searchLocationSuccessAction,
   searchLocationFailedAction,
-  searchWeatherSuccessAction,
-  searchWeatherFailedAction,
 } from 'containers/HomePage/actions';
-
-import request from 'utils/request';
-import { makeSelectUsername } from 'containers/HomePage/selectors';
-import {
-  SEARCH_LOCATION,
-  SEARCH_LOCATION_SUCCESS,
-  SEARCH_LOCATION_FAILED,
-  SEARCH_WEATHER,
-  SEARCH_WEATHER_SUCCESS,
-  SEARCH_WEATHER_FAILED,
-} from './constants';
+import { SEARCH_LOCATION } from './constants';
 
 /**
  * Home saga
@@ -46,7 +34,6 @@ export function* searchLocationTask(action) {
   const { location } = action;
 
   const { response, error } = yield call(searchLocationFetcher, location);
-  console.log(response, error);
   if (response) {
     const locations = map(
       item =>

@@ -7,7 +7,9 @@
 import React, { memo } from 'react';
 import { injectIntl, intlShape } from 'react-intl';
 import { compose } from 'redux';
+import get from 'lodash/fp/get';
 
+import { getFullTextDay } from 'utils/date';
 import type Weather from 'models/Weather';
 import {
   StyledWeatherItem,
@@ -24,16 +26,17 @@ export type Props = {
 };
 
 export function WeatherItem(props: Props) {
-  const { intl } = props;
+  const { intl, weather } = props;
   return (
     <StyledWeatherItem>
-      <StyledDay>Monday</StyledDay>
+      <StyledDay>{getFullTextDay(get('applicableDate', weather))}</StyledDay>
       <StyledMinTemp>
-        <StyledLabel>{intl.formatMessage(messages.minTemp)}</StyledLabel>20
+        <StyledLabel>{intl.formatMessage(messages.minTemp)}</StyledLabel>
+        {Math.round(get('minTemp', weather))}
       </StyledMinTemp>
       <StyledMaxTemp>
         <StyledLabel>{intl.formatMessage(messages.maxTemp)}</StyledLabel>
-        30
+        {Math.round(get('maxTemp', weather))}
       </StyledMaxTemp>
     </StyledWeatherItem>
   );

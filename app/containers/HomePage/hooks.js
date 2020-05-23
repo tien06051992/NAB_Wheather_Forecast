@@ -5,7 +5,7 @@ import map from 'lodash/fp/map';
 
 import useActions from 'hooks/useActions';
 import { searchLocationAction, changeCurrentLocationAction } from './actions';
-import { getLocations, getWeathers } from './selectors';
+import { getLocations } from './selectors';
 
 export const useHooks = () => {
   /**
@@ -41,7 +41,7 @@ export const useHooks = () => {
   const onLocationChangeHandler = useCallback(({ value }) => {
     changeCurrentLocation(value);
   }, []);
-  console.log('dzo');
+
   return {
     selectors: {
       locations,
