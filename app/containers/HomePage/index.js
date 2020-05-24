@@ -18,8 +18,8 @@ import {
   StyledSelect,
   StyledSelectWrapper,
   StyledErrorMessage,
+  StyledSection,
 } from './styles';
-import Section from './Section';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
@@ -42,7 +42,7 @@ export function HomePage(props: Props) {
         <meta name="description" content="NAB Weather Forecast" />
       </Helmet>
       <div>
-        <Section>
+        <StyledSection>
           <H2>
             <FormattedMessage {...messages.trymeHeader} />
           </H2>
@@ -62,7 +62,7 @@ export function HomePage(props: Props) {
           </StyledSelectWrapper>
 
           <WeatherBoard />
-        </Section>
+        </StyledSection>
       </div>
     </article>
   );

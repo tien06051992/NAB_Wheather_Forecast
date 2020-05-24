@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import COLOR from 'utils/colorPalette';
 
 export const StyledWeatherItem = styled.div`
-  border: 1px dashed #e1e1e1;
+  border: 1px dashed ${COLOR.GRAY_E1};
   width: 140px;
   height: 135px;
   text-align: center;
