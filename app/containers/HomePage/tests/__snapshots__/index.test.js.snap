@@ -4,7 +4,7 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
 <article>
   <div>
     <section
-      class="Section-sc-8drynt-0 gMnEsU"
+      class="styles__StyledSection-sc-11xkcq7-0 libSfy"
     >
       <h2
         class="H2-sc-1bmnih0-0 jgZAOw"
@@ -14,10 +14,10 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
         </span>
       </h2>
       <div
-        class="styles__StyledSelectWrapper-sc-11xkcq7-2 lncIKy"
+        class="styles__StyledSelectWrapper-sc-11xkcq7-3 cwBWkk"
       >
         <div
-          class="styles__StyledSelect-sc-11xkcq7-0 kxiqrW css-2b097c-container"
+          class="styles__StyledSelect-sc-11xkcq7-1 hxQPnC css-2b097c-container"
         >
           <div
             class=" css-yk16xz-control"

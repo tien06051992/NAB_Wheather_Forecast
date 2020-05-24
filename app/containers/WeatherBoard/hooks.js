@@ -14,9 +14,12 @@ export const useInit = () => {
   /**
    * Action
    */
-  const { searchWeather } = useActions({
-    searchWeather: searchWeatherAction,
-  });
+  const { searchWeather } = useActions(
+    {
+      searchWeather: searchWeatherAction,
+    },
+    [],
+  );
 
   useEffect(() => {
     if (currentLocation) searchWeather(currentLocation);

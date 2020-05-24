@@ -10,8 +10,6 @@ export function convertToJson(payload) {
   return JSON.stringify(payload);
 }
 
-export const createFromData = payload => new FormData(payload);
-
 export const notApplyCacheHeader = {
   headers: {
     'Cache-Control': 'no-cache, no-store',

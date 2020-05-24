@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useCallback } from 'react';
 import debounce from 'lodash/fp/debounce';
-import map from 'lodash/fp/map';
+import get from 'lodash/fp/get';
 
 import useActions from 'hooks/useActions';
 import { searchLocationAction, changeCurrentLocationAction } from './actions';
@@ -12,21 +12,24 @@ export const useHooks = () => {
    * Selectors
    */
   const locations = useSelector(getLocations);
-  const optionLocations = map(
-    item => ({
+  let optionLocations = [];
+  if (get('data', locations) && get('data.length', locations) > 0) {
+    optionLocations = get('data', locations).map(item => ({
       label: item.title,
       value: item.woeid,
-    }),
-    locations.data,
-  );
+    }));
+  }
 
   /**
    * Actions
    */
-  const { searchLocation, changeCurrentLocation } = useActions({
-    searchLocation: searchLocationAction,
-    changeCurrentLocation: changeCurrentLocationAction,
-  });
+  const { searchLocation, changeCurrentLocation } = useActions(
+    {
+      searchLocation: searchLocationAction,
+      changeCurrentLocation: changeCurrentLocationAction,
+    },
+    [],
+  );
 
   /**
    * Handler

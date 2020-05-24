@@ -1,4 +1,4 @@
-import fetch, { defaultHeader } from '../Fetch';
+import fetch, { defaultHeader, handleGeneralError } from '../Fetch';
 
 global.fetch = jest.fn(
   url =>
@@ -111,5 +111,35 @@ describe('Fetch', () => {
         expect(data.error).toEqual('error');
       });
     });
+  });
+});
+
+describe('handleGeneralError', () => {
+  it('should return error object', () => {
+    const objError = {
+      error: 'dummy error',
+    };
+    const error = {
+      response: {
+        text: () => ({
+          error: 'dummy error',
+        }),
+        clone: () => ({
+          json: () => ({
+            catch: () => ({
+              then: () => objError,
+            }),
+          }),
+        }),
+      },
+    };
+    const result = handleGeneralError(error);
+    expect(result.error).toEqual(objError);
+  });
+
+  it('should return error', () => {
+    const error = 'something wrong';
+    const result = handleGeneralError(error);
+    expect(result).toEqual({ error });
   });
 });

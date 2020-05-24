@@ -29,7 +29,7 @@ describe('useInit', () => {
   it('render hooks with call currentLocation', () => {
     const searchWeather = jest.fn();
     useSelector.mockClear();
-    useSelector.mockReturnValueOnce(123).mockReturnValueOnce(null);
+    useSelector.mockReturnValueOnce(123);
     useActions.mockClear();
     useActions.mockImplementation(() => ({
       searchWeather,
