@@ -1,12 +1,14 @@
 import React from 'react';
-import { render } from 'react-testing-library';
-import Select from 'react-select';
-import SelectWrapped from '../index';
+import ShallowRenderer from 'react-test-renderer/shallow';
 
-describe('<Tooltip />', () => {
-  const renderedComponent = render(<SelectWrapped />);
+import Select from '../index';
 
-  it('should be AntTooltip', () => {
-    expect(renderedComponent.find(Select).length).toBe(1);
+const renderer = new ShallowRenderer();
+
+describe('<Select />', () => {
+  it('should render and match the snapshot', () => {
+    renderer.render(<Select />);
+    const renderedOutput = renderer.getRenderOutput();
+    expect(renderedOutput).toMatchSnapshot();
   });
 });

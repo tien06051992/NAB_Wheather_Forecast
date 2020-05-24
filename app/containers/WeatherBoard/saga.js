@@ -3,12 +3,10 @@
  */
 
 import { call, put, takeLatest, all, fork } from 'redux-saga/effects';
-import map from 'lodash/fp/map';
-import flow from 'lodash/fp/flow';
-import set from 'lodash/fp/set';
 import get from 'lodash/fp/get';
 import slice from 'lodash/fp/slice';
 
+import { mapToModel } from 'utils/mapData';
 import Weather from 'models/Weather';
 import MetaWeatherFetcher from 'fetchers/MetaWeatherFetcher';
 import {
@@ -37,16 +35,10 @@ export function* searchWeatherTask(action) {
 
   const { response, error } = yield call(searchWeatherFetcher, woeid);
   if (response) {
-    const weathers = map(
-      item =>
-        flow(
-          set('applicableDate', get('applicable_date', item)),
-          set('minTemp', get('min_temp', item)),
-          set('maxTemp', get('max_temp', item)),
-          set('id', get('id', item)),
-        )(new Weather()),
-      slice(0, 5, get('consolidated_weather', response)),
-    );
+    const weathers = mapToModel({
+      data: slice(0, 5, get('consolidated_weather', response)),
+      Model: Weather,
+    });
     yield put(searchWeatherSuccessAction(weathers));
   } else {
     yield put(searchWeatherFailedAction(error));

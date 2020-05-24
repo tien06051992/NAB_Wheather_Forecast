@@ -3,17 +3,16 @@
 exports[`<App /> should render and match the snapshot 1`] = `
 <ForwardRef>
   <HelmetWrapper
-    defaultTitle="React.js Boilerplate"
+    defaultTitle="NAB Challenge Test"
     defer={true}
     encodeSpecialCharacters={true}
-    titleTemplate="%s - React.js Boilerplate"
+    titleTemplate="%s - NAB Challenge Test"
   >
     <meta
-      content="A React.js Boilerplate application"
+      content="A NAB Challenge Test application"
       name="description"
     />
   </HelmetWrapper>
-  <Header />
   <Switch>
     <Route
       component={[Function]}

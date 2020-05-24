@@ -2,44 +2,17 @@
 
 exports[`<Footer /> should render and match the snapshot 1`] = `
 <footer
-  className="Wrapper-wcfdfo-0 dPvBog"
+  className="Wrapper-ne5h47-0 fGFIJw"
 >
-  <section>
-    <span>
-      This project is licensed under the MIT license.
-    </span>
-  </section>
-  <section>
-    <div
-      className="Wrapper-xnjoq9-0 dNmQIR"
-    >
-      <select
-        className="Select-sc-1sm01tk-0 wIjFa"
-        onChange={[Function]}
-        value="en"
-      >
-        <option
-          value="en"
-        >
-          en
-        </option>
-        <option
-          value="de"
-        >
-          de
-        </option>
-      </select>
-    </div>
-  </section>
   <section>
     <span>
       
       Made with love by 
       <a
-        className="A-br8h0y-0 dwVNvo"
-        href="https://twitter.com/mxstbr"
+        className="A-sc-19ne21s-0 csSpLt"
+        href="https://www.linkedin.com/in/tien-le-820b8684?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3Bv7lA2obvS%2FGD5HMlaWt5mA%3D%3D"
       >
-        Max Stoiber
+        Tien Le
       </a>
       .
     

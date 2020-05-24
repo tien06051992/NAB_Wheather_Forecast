@@ -20,4 +20,8 @@ export default defineMessages({
     id: `${scope}.tryme.placeholderSearch`,
     defaultMessage: 'Ex: Ho Chi Minh',
   },
+  someThingWrong: {
+    id: `${scope}.tryme.someThingWrong`,
+    defaultMessage: 'Something went wrong, please try again.',
+  },
 });

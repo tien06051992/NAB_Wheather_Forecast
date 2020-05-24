@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<WeatherItem /> should render and match the snapshot 1`] = `
+<ForwardRef>
+  <ForwardRef>
+    Saturday
+  </ForwardRef>
+  <ForwardRef>
+    <ForwardRef />
+    28
+  </ForwardRef>
+  <ForwardRef>
+    <ForwardRef />
+    30
+  </ForwardRef>
+</ForwardRef>
+`;

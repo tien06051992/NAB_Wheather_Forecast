@@ -23,6 +23,7 @@ export function WeatherBoard() {
   const { weathers } = selectors;
   const { data, status } = weathers;
   if (!status) return false;
+
   return (
     <StyledWeatherBoard>
       {status === STATUS.PENDING && (
