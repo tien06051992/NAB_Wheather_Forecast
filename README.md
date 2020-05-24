@@ -24,9 +24,9 @@
   <dt>SEO</dt>
   <dd>We support SEO (document head tags management) for search engines that support indexing of JavaScript content. (eg. Google)</dd>
 </dl>
-<img src="https://raw.githubusercontent.com/tien06051992/NAB_Wheather_Forecast/master/app/images/screenshot.png" align="center" />
+<img src="https://raw.githubusercontent.com/tien06051992/NAB_Wheather_Forecast/master/app/images/screenshot.PNG" align="center" />
 ## Test coverage
-<img src="https://raw.githubusercontent.com/tien06051992/NAB_Wheather_Forecast/master/app/images/test-coverage.png" align="center" />
+<img src="https://raw.githubusercontent.com/tien06051992/NAB_Wheather_Forecast/master/app/images/test-coverage.PNG" align="center" />
 ## Tech stack
 ### Core
 
